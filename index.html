@@ -1,0 +1,1744 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>Convertidor de Imagen a ASCII Art Animado | Vicbasertec</title>
+    <meta name="description" content="Convierte imágenes en arte ASCII animado gratis con Vicbasertec. Genera texto animado con efectos como matrix, ondas, glitch, neon y más. Descarga como GIF animado.">
+    <meta name="keywords" content="ascii art, ascii animado, imagen a texto, generador ascii, ascii online, texto animado, matrix effect, vicbasertec">
+    <meta name="author" content="Vicbasertec">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://vicbas.com/dots">
+    
+    <meta property="og:title" content="Convertidor de ASCII Art Animado | Vicbasertec">
+    <meta property="og:description" content="Transforma tus imágenes en arte ASCII animado con efectos increíbles. Gratis y online.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://vicbas.com/dots">
+    <meta property="og:site_name" content="Vicbasertec">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Convertidor de ASCII Art Animado | Vicbasertec">
+    <meta name="twitter:description" content="Crea arte ASCII animado gratis con efectos matrix, ondas, glitch, neon y más.">
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Vicbasertec ASCII Art Converter",
+        "description": "Herramienta online premium para convertir imágenes en arte ASCII animado",
+        "url": "https://vicbas.com/dots",
+        "applicationCategory": "DesignApplication",
+        "operatingSystem": "Web Browser",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "featureList": [
+            "Conversión de imágenes a ASCII",
+            "Efectos de animación: matrix, ondas, glitch, respirar, escaneo, lluvia, neon, cyber",
+            "Colores sólidos y degradados",
+            "Ajuste de resolución, contraste, brillo",
+            "Exportar código HTML/CSS/JS completo",
+            "Descargar archivo .txt y GIF animado"
+        ]
+    }
+    </script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/gif.js@0.2.0/dist/gif.js"></script>
+    
+    <style>
+        :root {
+            --black: #0B0B0B;
+            --black-light: #111111;
+            --black-card: #141414;
+            --black-alt: #0F0F0F;
+            --purple: #7B2CBF;
+            --purple-dark: #3C096C;
+            --purple-light: #9D4EDD;
+            --purple-glow: rgba(123, 44, 191, 0.4);
+            --purple-glow-subtle: rgba(123, 44, 191, 0.15);
+            --silver: #E0E0E0;
+            --silver-muted: #A0A0A0;
+            --silver-dim: #666666;
+            --silver-dark: #2A2A2A;
+            --white: #FFFFFF;
+            --border-color: rgba(224, 224, 224, 0.12);
+            --border-hover: rgba(224, 224, 224, 0.25);
+            --gradient-purple: linear-gradient(135deg, var(--purple-dark) 0%, var(--purple) 100%);
+            --gradient-hero: linear-gradient(180deg, var(--black) 0%, var(--black-light) 100%);
+            --gradient-cta: linear-gradient(135deg, var(--purple-dark) 0%, var(--purple) 50%, var(--purple-dark) 100%);
+            --shadow-glow: 0 0 20px var(--purple-glow);
+            --shadow-glow-sm: 0 0 10px var(--purple-glow);
+            --shadow-glow-lg: 0 0 40px var(--purple-glow), 0 0 80px rgba(123, 44, 191, 0.15);
+            --transition: all 0.3s ease;
+            --transition-glow: box-shadow 0.3s ease, transform 0.3s ease;
+            --transition-color: color 0.25s ease, background 0.25s ease;
+            --radius-sm: 6px;
+            --radius-md: 8px;
+            --radius-lg: 16px;
+            --radius-xl: 24px;
+            --radius-full: 50px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        html { scroll-behavior: smooth; }
+        
+        ::selection {
+            background: rgba(123, 44, 191, 0.3);
+            color: var(--white);
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--black);
+            color: var(--silver);
+            min-height: 100vh;
+            padding: 20px;
+            -webkit-font-smoothing: antialiased;
+            position: relative;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            background-image: repeating-linear-gradient(
+                -45deg,
+                transparent,
+                transparent 80px,
+                rgba(224, 224, 224, 0.012) 80px,
+                rgba(224, 224, 224, 0.012) 81px
+            );
+            z-index: 0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        h1 { 
+            text-align: center; 
+            margin-bottom: 8px; 
+            font-size: 3rem; 
+            font-weight: 700;
+            line-height: 1.15;
+        }
+        
+        .subtitle { 
+            text-align: center; 
+            color: var(--silver-muted); 
+            margin-bottom: 32px; 
+            font-size: 0.92rem; 
+            line-height: 1.6;
+        }
+        
+        .highlight { color: var(--purple); font-weight: 600; }
+
+        .drop-zone {
+            border: 2px dashed var(--border-color);
+            border-radius: var(--radius-xl);
+            padding: 50px 25px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition-glow);
+            max-width: 600px;
+            margin: 0 auto 24px;
+            background: var(--black-card);
+        }
+        .drop-zone:hover, .drop-zone.dragover {
+            border-color: var(--purple);
+            background: var(--black-light);
+            box-shadow: var(--shadow-glow);
+            transform: translateY(-4px);
+        }
+        .drop-zone p { color: var(--silver-muted); font-size: 0.92rem; }
+        .drop-zone .icon { font-size: 2.5rem; margin-bottom: 12px; }
+        #fileInput { display: none; }
+
+        .workspace { display: none; max-width: 100%; margin: 0 auto; }
+        .workspace.active { display: block; }
+
+        .btn-new {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--silver);
+            padding: 10px 20px;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-size: 0.82rem;
+            display: block;
+            margin: 0 auto 24px;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+        .btn-new:hover { 
+            border-color: var(--purple); 
+            color: var(--purple); 
+            box-shadow: var(--shadow-glow-sm);
+        }
+
+        .preview-row {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 20px;
+            align-items: center;
+            justify-content: center;
+        }
+        .preview-thumb { 
+            width: 120px; 
+            border-radius: var(--radius-lg); 
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-glow-sm);
+        }
+        .preview-info { font-size: 0.82rem; color: var(--silver-muted); text-align: left; }
+        .preview-info .mode-tag {
+            display: inline-block;
+            background: var(--gradient-purple);
+            color: var(--white);
+            padding: 4px 10px;
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            margin-top: 8px;
+            font-weight: 600;
+        }
+
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            padding: 16px;
+            background: var(--black-card);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+        }
+        .control-group { display: flex; flex-direction: column; gap: 4px; }
+        .control-group label {
+            font-size: 0.75rem;
+            color: var(--silver-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+        .control-group select,
+        .control-group input[type="range"] {
+            background: var(--black-alt);
+            border: 1px solid var(--border-color);
+            color: var(--silver);
+            padding: 6px 10px;
+            border-radius: var(--radius-sm);
+            font-size: 0.82rem;
+            transition: var(--transition-color);
+        }
+        .control-group select:hover,
+        .control-group input[type="range"]:hover {
+            border-color: var(--border-hover);
+        }
+        .control-group select:focus {
+            outline: none;
+            border-color: var(--purple);
+            box-shadow: var(--shadow-glow-sm);
+        }
+        .control-group input[type="range"] {
+            width: 110px;
+            accent-color: var(--purple);
+            padding: 0;
+        }
+        .range-value { 
+            font-size: 0.75rem; 
+            color: var(--purple); 
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .output-container {
+            background: var(--black-alt);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 16px;
+            overflow: auto;
+            max-height: 70vh;
+            display: flex;
+            justify-content: center;
+            box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.5);
+        }
+        #asciiOutput {
+            font-family: 'Courier New', monospace;
+            font-size: 5px;
+            line-height: 1;
+            letter-spacing: 0px;
+            white-space: pre;
+            color: var(--purple-light);
+            display: inline-block;
+            text-shadow: 0 0 10px var(--purple-glow-subtle);
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+        .btn {
+            background: var(--gradient-purple);
+            color: var(--white);
+            border: none;
+            padding: 10px 20px;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-size: 0.82rem;
+            transition: var(--transition-glow);
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        .btn:hover { 
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px var(--purple-glow);
+        }
+        .btn:active { transform: translateY(0); }
+        .btn-outline { 
+            background: transparent; 
+            border: 1px solid var(--border-color); 
+            color: var(--silver); 
+        }
+        .btn-outline:hover { 
+            border-color: var(--purple); 
+            color: var(--purple);
+            box-shadow: var(--shadow-glow-sm);
+        }
+        
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(11, 11, 11, 0.9);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal {
+            background: var(--black-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-xl);
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: var(--shadow-glow-lg);
+        }
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: var(--black-light);
+        }
+        .modal-header h2 { font-size: 1.1rem; font-weight: 600; }
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--silver-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+            line-height: 1;
+            transition: var(--transition-color);
+        }
+        .modal-close:hover { color: var(--white); }
+        .modal-body {
+            padding: 24px;
+            overflow-y: auto;
+            flex: 1;
+        }
+        .modal-body h3 { 
+            font-size: 0.92rem; 
+            color: var(--purple); 
+            margin-bottom: 10px; 
+            font-weight: 600;
+        }
+        .modal-body p { 
+            font-size: 0.85rem; 
+            color: var(--silver-muted); 
+            margin-bottom: 16px; 
+            line-height: 1.7; 
+        }
+        .modal-body .steps { 
+            margin-bottom: 20px; 
+            padding-left: 20px;
+        }
+        .modal-body .steps li {
+            font-size: 0.85rem;
+            color: var(--silver);
+            margin-bottom: 8px;
+            line-height: 1.7;
+        }
+        .modal-body .steps li strong { 
+            color: var(--white);
+            font-weight: 600;
+        }
+        .code-tabs {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+        .code-tab {
+            background: transparent;
+            border: none;
+            color: var(--silver-muted);
+            padding: 8px 16px;
+            cursor: pointer;
+            font-size: 0.82rem;
+            transition: var(--transition-color);
+            font-weight: 500;
+            border-bottom: 2px solid transparent;
+        }
+        .code-tab.active { 
+            color: var(--purple); 
+            border-bottom-color: var(--purple);
+        }
+        .code-tab:hover { color: var(--silver); }
+        .code-block {
+            background: var(--black-alt);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 16px;
+            position: relative;
+            margin-bottom: 20px;
+        }
+        .code-block pre {
+            font-family: 'Courier New', monospace;
+            font-size: 0.7rem;
+            color: var(--silver);
+            white-space: pre-wrap;
+            word-break: break-all;
+            max-height: 350px;
+            overflow-y: auto;
+            line-height: 1.6;
+            padding-right: 60px;
+        }
+        .code-copy-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: var(--gradient-purple);
+            color: var(--white);
+            border: none;
+            padding: 6px 14px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-size: 0.75rem;
+            font-weight: 600;
+            transition: var(--transition-glow);
+        }
+        .code-copy-btn:hover { 
+            box-shadow: var(--shadow-glow-sm);
+        }
+        .code-panel { display: none; }
+        .code-panel.active { display: block; }
+        .info-box {
+            background: rgba(123, 44, 191, 0.08);
+            border: 1px solid rgba(123, 44, 191, 0.2);
+            border-radius: var(--radius-lg);
+            padding: 14px 18px;
+            margin-bottom: 20px;
+        }
+        .info-box p { 
+            margin-bottom: 0; 
+            color: var(--silver);
+            font-size: 0.85rem;
+        }
+        .info-box code {
+            background: var(--black-light);
+            padding: 2px 6px;
+            border-radius: var(--radius-sm);
+            font-family: 'Courier New', monospace;
+            font-size: 0.82rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            h1 { font-size: 2.4rem; }
+            .container { padding: 0 16px; }
+            .controls { padding: 12px; gap: 10px; }
+            .control-group input[type="range"] { width: 90px; }
+        }
+        
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            h1 { font-size: 2rem !important; margin-bottom: 6px; }
+            .subtitle { font-size: 0.85rem !important; margin-bottom: 20px; }
+            .drop-zone { padding: 35px 18px; }
+            .preview-row { flex-direction: column; gap: 10px; }
+            .preview-thumb { width: 90px; }
+            .preview-info { text-align: center; }
+            .controls { padding: 12px 10px; gap: 8px; }
+            .control-group { min-width: calc(50% - 8px); }
+            .control-group select,
+            .control-group input[type="range"] {
+                font-size: 0.78rem;
+                padding: 5px 8px;
+            }
+            .control-group input[type="range"] { width: 100%; }
+            .range-value { font-size: 0.7rem; }
+            .btn { padding: 9px 16px; font-size: 0.78rem; }
+            .actions { gap: 8px; }
+            .modal { max-width: 95%; max-height: 95vh; }
+            .modal-body { padding: 18px; }
+            .modal-header { padding: 16px 20px; }
+            .modal-header h2 { font-size: 1rem; }
+            .code-block pre { font-size: 0.65rem; max-height: 300px; }
+            .output-container { padding: 12px; max-height: 65vh; }
+            #asciiOutput { font-size: 4px !important; }
+        }
+        
+        @media (max-width: 480px) {
+            body { padding: 8px; }
+            h1 { font-size: 1.6rem !important; }
+            .subtitle { font-size: 0.8rem !important; }
+            .drop-zone { padding: 25px 14px; }
+            .drop-zone .icon { font-size: 2rem; }
+            .drop-zone p { font-size: 0.85rem; }
+            .btn { padding: 8px 14px; font-size: 0.75rem; }
+            .control-group { min-width: 100%; }
+            .modal-body { padding: 14px; }
+            .code-block { padding: 12px; }
+            .code-copy-btn { padding: 5px 12px; font-size: 0.7rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Convertidor de <span class="highlight">ASCII Art</span> Animado</h1>
+    <p class="subtitle">Transforma tus imágenes en arte ASCII con efectos increíbles. Descarga como GIF animado. Gratis y online.</p>
+
+    <div class="drop-zone" id="dropZone">
+        <div class="icon">📷</div>
+        <p>Arrastra una imagen acá, o haz click para seleccionar (PNG, JPG, WebP)</p>
+    </div>
+    <input type="file" id="fileInput" accept="image/*">
+
+    <div class="workspace" id="workspace">
+        <button class="btn-new" id="newImage">← Nueva imagen</button>
+
+        <div class="preview-row">
+            <img id="previewImg" class="preview-thumb" alt="Preview">
+            <div class="preview-info">
+                <div id="imgInfo"></div>
+                <span class="mode-tag" id="modeTag">Estática</span>
+            </div>
+        </div>
+
+        <div class="controls">
+            <div class="control-group">
+                <label>Resolución</label>
+                <input type="range" id="resolution" min="20" max="300" value="100">
+                <span class="range-value" id="resValue">100</span>
+            </div>
+            <div class="control-group">
+                <label>Tamaño</label>
+                <input type="range" id="fontSize" min="2" max="14" value="5">
+                <span class="range-value" id="fontValue">5px</span>
+            </div>
+            <div class="control-group">
+                <label>Densidad</label>
+                <select id="densityScale">
+                    <option value="ultra">Ultra</option>
+                    <option value="detailed">Detallada</option>
+                    <option value="standard" selected>Estándar</option>
+                    <option value="smooth">Suave</option>
+                    <option value="minimal">Minimal</option>
+                    <option value="binary">Binario</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label>Contraste</label>
+                <input type="range" id="contrast" min="-50" max="50" value="0">
+                <span class="range-value" id="contrastValue">0</span>
+            </div>
+            <div class="control-group">
+                <label>Brillo</label>
+                <input type="range" id="brightness" min="-50" max="50" value="0">
+                <span class="range-value" id="brightnessValue">0</span>
+            </div>
+            <div class="control-group">
+                <label>Color</label>
+                <select id="colorMode">
+                    <option value="purple">Morado</option>
+                    <option value="cyan">Cyan</option>
+                    <option value="green">Verde</option>
+                    <option value="white">Blanco</option>
+                    <option value="amber">Ámbar</option>
+                    <option value="pink">Rosa</option>
+                    <option value="blue">Azul</option>
+                    <option value="orange">Naranja</option>
+                    <option value="red">Rojo</option>
+                    <option value="gradient-purple">Degradado Morado</option>
+                    <option value="gradient-cyber">Degradado Cyber</option>
+                    <option value="gradient-sunset">Degradado Sunset</option>
+                    <option value="gradient-ocean">Degradado Ocean</option>
+                    <option value="gradient-rainbow">Degradado Rainbow</option>
+                    <option value="gradient-neon">Degradado Neon</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label>Invertir</label>
+                <select id="invertMode">
+                    <option value="no">No</option>
+                    <option value="yes">Sí</option>
+                </select>
+            </div>
+            <div class="control-group" id="animGroup">
+                <label>Animación</label>
+                <select id="animMode">
+                    <option value="off">Sin efecto</option>
+                    <option value="vibrate">Vibrar</option>
+                    <option value="wave">Ondas</option>
+                    <option value="matrix">Matrix</option>
+                    <option value="scan">Escaneo</option>
+                    <option value="glitch">Glitch</option>
+                    <option value="breathe">Respirar</option>
+                    <option value="rain">Lluvia</option>
+                    <option value="neon">Neon Pulse</option>
+                    <option value="cyber">Cyber</option>
+                    <option value="plasma">Plasma</option>
+                    <option value="pixelate">Pixelate</option>
+                </select>
+            </div>
+            <div class="control-group" id="animSpeedGroup" style="display:none">
+                <label>Velocidad</label>
+                <input type="range" id="animSpeed" min="1" max="10" value="5">
+                <span class="range-value" id="animSpeedValue">5</span>
+            </div>
+        </div>
+
+        <div class="output-container">
+            <pre id="asciiOutput"></pre>
+        </div>
+
+        <div class="actions">
+            <button class="btn" id="copyBtn">📋 Copiar texto</button>
+            <button class="btn btn-outline" id="embedBtn">💻 Obtener código</button>
+            <button class="btn btn-outline" id="downloadBtn">📥 Descargar .txt</button>
+            <button class="btn btn-outline" id="downloadGifBtn" style="display:none;">🎬 Descargar GIF</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="embedModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h2>Usa este ASCII Art en tu web</h2>
+            <button class="modal-close" id="modalClose">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="info-box">
+                <p>Este código incluye <strong>la animación seleccionada y el color actual</strong>. Copiá y pegalo en tu HTML.</p>
+            </div>
+
+            <h3>Cómo usarlo</h3>
+            <ol class="steps">
+                <li><strong>Copia el código</strong> haciendo click en el botón "Copiar".</li>
+                <li><strong>Pega el código</strong> en tu archivo HTML donde quieras que aparezca.</li>
+                <li><strong>Ajusta el tamaño</strong> cambiando el <strong>font-size</strong> en el CSS.</li>
+                <li><strong>Personaliza colores</strong> modificando las variables en el <code>style</code>.</li>
+            </ol>
+
+            <h3>Características incluidas</h3>
+            <p><strong>✨ Animación completa</strong> — El efecto que seleccionaste (ondas, matrix, glitch, etc.)</p>
+            <p><strong>🎨 Color personalizado</strong> — Incluye el color o degradado que elegiste</p>
+            <p><strong>⚡ Velocidad ajustable</strong> — Variable <code>speed</code> para controlar la animación</p>
+            <p><strong>📱 Responsive</strong> — Funciona en cualquier dispositivo</p>
+            <p><strong>🚀 Sin dependencias</strong> — Solo HTML, CSS y JS puro</p>
+
+            <div class="code-tabs">
+                <button class="code-tab active" data-tab="static">Estático</button>
+                <button class="code-tab" data-tab="animated">Animado</button>
+            </div>
+
+            <div class="code-panel active" id="panel-static">
+                <div class="code-block">
+                    <button class="code-copy-btn" data-copy="static">Copiar</button>
+                    <pre id="staticCode"></pre>
+                </div>
+            </div>
+
+            <div class="code-panel" id="panel-animated">
+                <div class="code-block">
+                    <button class="code-copy-btn" data-copy="animated">Copiar</button>
+                    <pre id="animatedCode"></pre>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <p><strong>💡 Tip:</strong> Para cambiar el color, modifica las variables CSS <code>--ascii-color</code> o usa un degradado en <code>color</code>.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<canvas id="hiddenCanvas" style="display:none;"></canvas>
+
+<script>
+const DENSITY_SCALES = {
+    ultra:    '$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\\|()1{}[]?-_+~<>i!lI;:,"\'. ',
+    detailed: 'N@#W$9876543210?!abc;:+=-,._ ',
+    standard: ' .:-=+*#%@',
+    smooth:   ' ░▒▓█',
+    minimal:  ' .:#@',
+    binary:   ' @'
+};
+
+const COLORS = {
+    purple: '#9D4EDD',
+    cyan: '#00E5FF',
+    green: '#00FF41',
+    white: '#E0E0E0',
+    amber: '#FFB000',
+    pink: '#FF6B9D',
+    blue: '#3B82F6',
+    orange: '#FF9500',
+    red: '#EF4444'
+};
+
+const GRADIENTS = {
+    'gradient-purple': 'linear-gradient(135deg, #3C096C, #7B2CBF, #9D4EDD)',
+    'gradient-cyber': 'linear-gradient(135deg, #06b6d4, #8b5cf6, #ec4899)',
+    'gradient-sunset': 'linear-gradient(135deg, #f97316, #ef4444, #ec4899)',
+    'gradient-ocean': 'linear-gradient(135deg, #0ea5e9, #06b6d4, #10b981)',
+    'gradient-rainbow': 'linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3)',
+    'gradient-neon': 'linear-gradient(135deg, #00ff87, #60efff, #00ff87)'
+};
+
+const CHAR_ASPECT = 1.65;
+
+const $ = (id) => document.getElementById(id);
+
+const dropZone = $('dropZone');
+const fileInput = $('fileInput');
+const workspace = $('workspace');
+const previewImg = $('previewImg');
+const imgInfo = $('imgInfo');
+const modeTag = $('modeTag');
+const asciiOutput = $('asciiOutput');
+const hiddenCanvas = $('hiddenCanvas');
+const hCtx = hiddenCanvas.getContext('2d', { willReadFrequently: true });
+const animGroup = $('animGroup');
+const animSpeedGroup = $('animSpeedGroup');
+
+const resolutionSlider = $('resolution');
+const resValue = $('resValue');
+const fontSizeSlider = $('fontSize');
+const fontValue = $('fontValue');
+const densitySelect = $('densityScale');
+const contrastSlider = $('contrast');
+const contrastValue = $('contrastValue');
+const brightnessSlider = $('brightness');
+const brightnessValue = $('brightnessValue');
+const colorSelect = $('colorMode');
+const invertSelect = $('invertMode');
+const animModeSelect = $('animMode');
+const animSpeedSlider = $('animSpeed');
+const animSpeedValue = $('animSpeedValue');
+
+let currentImage = null;
+let currentAscii = '';
+let luminanceGrid = null;
+let gridWidth = 0;
+let gridHeight = 0;
+let livingAnimId = null;
+let settingsTimeout = null;
+
+let rainDrops = [];
+
+dropZone.addEventListener('click', () => fileInput.click());
+dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('dragover'); });
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+dropZone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    dropZone.classList.remove('dragover');
+    const file = e.dataTransfer.files[0];
+    if (file && file.type.startsWith('image/')) loadImage(file);
+});
+fileInput.addEventListener('change', (e) => { if (e.target.files[0]) loadImage(e.target.files[0]); });
+$('newImage').addEventListener('click', resetAll);
+
+function resetAll() {
+    stopAll();
+    workspace.classList.remove('active');
+    dropZone.style.display = '';
+    fileInput.value = '';
+    currentImage = null;
+    luminanceGrid = null;
+    rainDrops = [];
+}
+
+async function loadImage(file) {
+    if (!file.type.startsWith('image/')) {
+        alert('Por favor, selecciona un archivo de imagen válido (PNG, JPG, WebP)');
+        return;
+    }
+
+    const dataUrl = await new Promise(r => {
+        const reader = new FileReader();
+        reader.onload = (e) => r(e.target.result);
+        reader.readAsDataURL(file);
+    });
+
+    previewImg.src = dataUrl;
+
+    const img = await new Promise(r => {
+        const i = new Image();
+        i.onload = () => r(i);
+        i.onerror = () => r(null);
+        i.src = dataUrl;
+    });
+
+    if (!img) {
+        alert('No se pudo cargar la imagen. Intenta con otro archivo.');
+        return;
+    }
+
+    currentImage = img;
+    modeTag.textContent = 'Estática';
+    imgInfo.textContent = `${img.width}x${img.height}px — ${(file.size / 1024).toFixed(1)}KB`;
+    dropZone.style.display = 'none';
+    workspace.classList.add('active');
+    updateAsciiColor();
+    convert();
+}
+
+function pixelsToAscii(data, width, height) {
+    const density = DENSITY_SCALES[densitySelect.value];
+    const inverted = invertSelect.value === 'yes';
+    const cFactor = 1 + parseInt(contrastSlider.value) / 50;
+    const bAdj = parseInt(brightnessSlider.value) * 3;
+
+    let ascii = '';
+    const grid = [];
+
+    for (let y = 0; y < height; y++) {
+        const row = [];
+        for (let x = 0; x < width; x++) {
+            const idx = (y * width + x) * 4;
+            let lum = 0.299 * data[idx] + 0.587 * data[idx + 1] + 0.114 * data[idx + 2];
+            lum = 128 + (lum - 128) * cFactor + bAdj;
+            lum = Math.max(0, Math.min(255, lum));
+            row.push(lum);
+            let ci = Math.floor((lum / 255) * (density.length - 1));
+            if (inverted) ci = density.length - 1 - ci;
+            ascii += density[ci];
+        }
+        grid.push(row);
+        ascii += '\n';
+    }
+    return { ascii, grid };
+}
+
+function updateAsciiColor() {
+    const colorMode = colorSelect.value;
+    if (colorMode.startsWith('gradient-')) {
+        const gradient = GRADIENTS[colorMode];
+        asciiOutput.style.background = gradient;
+        asciiOutput.style.webkitBackgroundClip = 'text';
+        asciiOutput.style.webkitTextFillColor = 'transparent';
+        asciiOutput.style.textShadow = '0 0 20px rgba(123, 44, 191, 0.3)';
+    } else {
+        asciiOutput.style.background = 'transparent';
+        asciiOutput.style.webkitBackgroundClip = 'unset';
+        asciiOutput.style.webkitTextFillColor = 'unset';
+        asciiOutput.style.color = COLORS[colorMode];
+        asciiOutput.style.textShadow = '0 0 10px ' + COLORS[colorMode] + '40';
+    }
+}
+
+function convert() {
+    if (!currentImage) return;
+
+    const width = parseInt(resolutionSlider.value);
+    const height = Math.round((currentImage.height / currentImage.width) * width / CHAR_ASPECT);
+
+    hiddenCanvas.width = width;
+    hiddenCanvas.height = height;
+    hCtx.drawImage(currentImage, 0, 0, width, height);
+
+    const data = hCtx.getImageData(0, 0, width, height).data;
+    const { ascii, grid } = pixelsToAscii(data, width, height);
+
+    currentAscii = ascii;
+    luminanceGrid = grid;
+    gridWidth = width;
+    gridHeight = height;
+
+    initRainDrops();
+
+    if (animModeSelect.value !== 'off') {
+        startAnimation();
+    } else {
+        stopAnimation();
+        asciiOutput.textContent = ascii;
+    }
+}
+
+function initRainDrops() {
+    if (!luminanceGrid || !luminanceGrid.length) return;
+    rainDrops = [];
+    for (let x = 0; x < gridWidth; x++) {
+        rainDrops.push({
+            y: Math.random() * gridHeight * -1,
+            speed: 0.3 + Math.random() * 0.7,
+            length: 3 + Math.floor(Math.random() * 8)
+        });
+    }
+}
+
+function getSpeedMultiplier() {
+    return parseInt(animSpeedSlider.value) / 5;
+}
+
+function clamp(v, min, max) { return v < min ? min : v > max ? max : v; }
+
+function renderFrame(t) {
+    if (!luminanceGrid || !luminanceGrid.length) return;
+
+    const mode = animModeSelect.value;
+    const density = DENSITY_SCALES[densitySelect.value];
+    const inverted = invertSelect.value === 'yes';
+    const speed = getSpeedMultiplier();
+    const dLen = density.length;
+    const time = t * 0.001 * speed;
+
+    let ascii = '';
+
+    if (mode === 'vibrate') {
+        const intensity = 3 * (255 / dLen);
+        for (let y = 0; y < gridHeight; y++) {
+            const row = luminanceGrid[y];
+            for (let x = 0; x < gridWidth; x++) {
+                const jitter = (Math.random() - 0.5) * 2 * intensity;
+                const val = clamp(row[x] + jitter, 0, 255);
+                let ci = Math.floor((val / 255) * (dLen - 1));
+                if (inverted) ci = dLen - 1 - ci;
+                ascii += density[ci];
+            }
+            ascii += '\n';
+        }
+    }
+
+    else if (mode === 'wave') {
+        const freq = 0.08;
+        const amp = 40;
+        const phase = time * 4;
+        for (let y = 0; y < gridHeight; y++) {
+            const row = luminanceGrid[y];
+            for (let x = 0; x < gridWidth; x++) {
+                const wave = Math.sin(x * freq + phase) * amp + Math.sin(y * freq * 0.7 + phase * 0.6) * amp * 0.5;
+                const val = clamp(row[x] + wave, 0, 255);
+                let ci = Math.floor((val / 255) * (dLen - 1));
+                if (inverted) ci = dLen - 1 - ci;
+                ascii += density[ci];
+            }
+            ascii += '\n';
+        }
+    }
+
+    else if (mode === 'matrix') {
+        const trails = new Uint8Array(gridWidth * gridHeight);
+        for (let x = 0; x < gridWidth; x++) {
+            const drop = rainDrops[x];
+            drop.y += drop.speed * speed;
+            if (drop.y > gridHeight + drop.length) {
+                drop.y = -drop.length - Math.random() * gridHeight * 0.5;
+                drop.speed = 0.3 + Math.random() * 0.7;
+                drop.length = 3 + Math.floor(Math.random() * 8);
+            }
+            const headY = Math.floor(drop.y);
+            for (let i = 0; i < drop.length; i++) {
+                const ty = headY - i;
+                if (ty >= 0 && ty < gridHeight) {
+                    const brightness = i === 0 ? 2.0 : (1.0 - i / drop.length);
+                    trails[ty * gridWidth + x] = Math.max(trails[ty * gridWidth + x], Math.floor(brightness * 255));
+                }
+            }
+        }
+        for (let y = 0; y < gridHeight; y++) {
+            const row = luminanceGrid[y];
+            for (let x = 0; x < gridWidth; x++) {
+                const trail = trails[y * gridWidth + x];
+                if (trail > 100) {
+                    const ci = Math.floor((1 - trail / 255) * (dLen - 1) * 0.5);
+                    ascii += density[ci];
+                } else {
+                    const ci = Math.floor((row[x] / 255) * (dLen - 1));
+                    ascii += inverted ? density[dLen - 1 - ci] : density[ci];
+                }
+            }
+            ascii += '\n';
+        }
+    }
+
+    else if (mode === 'scan') {
+        const scanY = ((time * 15) % (gridHeight + 20)) - 10;
+        const band = 6;
+        for (let y = 0; y < gridHeight; y++) {
+            const row = luminanceGrid[y];
+            const dist = Math.abs(y - scanY);
+            const boost = dist < band ? (1 - dist / band) * 100 : 0;
+            for (let x = 0; x < gridWidth; x++) {
+                const val = clamp(row[x] + boost, 0, 255);
+                let ci = Math.floor((val / 255) * (dLen - 1));
+                if (inverted) ci = dLen - 1 - ci;
+                ascii += density[ci];
+            }
+            ascii += '\n';
+        }
+    }
+
+    else if (mode === 'glitch') {
+        const grid = luminanceGrid;
+        const shiftChance = 0.03 * speed;
+        for (let y = 0; y < gridHeight; y++) {
+            let shift = 0;
+            if (Math.random() < shiftChance) {
+                shift = Math.floor((Math.random() - 0.5) * 12);
+            }
+            for (let x = 0; x < gridWidth; x++) {
+                const sx = clamp(x + shift, 0, gridWidth - 1);
+                const val = grid[y][sx];
+                let ci = Math.floor((val / 255) * (dLen - 1));
+                if (Math.random() < 0.01 * speed) {
+                    ci = Math.floor(Math.random() * dLen);
+                }
+                if (inverted) ci = dLen - 1 - ci;
+                ascii += density[ci];
+            }
+            ascii += '\n';
+        }
+    }
+
+    else if (mode === 'breathe') {
+        const pulse = Math.sin(time * 2) * 30;
+        for (let y = 0; y < gridHeight; y++) {
+            const row = luminanceGrid[y];
+            for (let x = 0; x < gridWidth; x++) {
+                const val = clamp(row[x] + pulse, 0, 255);
+                let ci = Math.floor((val / 255) * (dLen - 1));
+                if (inverted) ci = dLen - 1 - ci;
+                ascii += density[ci];
+            }
+            ascii += '\n';
+        }
+    }
+
+    else if (mode === 'rain') {
+        const numDrops = Math.floor(gridWidth * gridHeight * 0.008 * speed);
+        const noiseMap = new Map();
+        for (let i = 0; i < numDrops; i++) {
+            const rx = Math.floor(Math.random() * gridWidth);
+            const ry = Math.floor(Math.random() * gridHeight);
+            const key = ry * gridWidth + rx;
+            noiseMap.set(key, Math.random() * 255);
+        }
+        for (let y = 0; y < gridHeight; y++) {
+            const row = luminanceGrid[y];
+            for (let x = 0; x < gridWidth; x++) {
+                const key = y * gridWidth + x;
+                if (noiseMap.has(key)) {
+                    const nv = noiseMap.get(key);
+                    let ci = Math.floor((nv / 255) * (dLen - 1));
+                    if (inverted) ci = dLen - 1 - ci;
+                    ascii += density[ci];
+                } else {
+                    let ci = Math.floor((row[x] / 255) * (dLen - 1));
+                    if (inverted) ci = dLen - 1 - ci;
+                    ascii += density[ci];
+                }
+            }
+            ascii += '\n';
+        }
+    }
+
+    else if (mode === 'neon') {
+        const pulse = Math.sin(time * 3) * 20;
+        const glowCenter = (gridWidth / 2) + Math.sin(time * 2) * (gridWidth / 4);
+        for (let y = 0; y < gridHeight; y++) {
+            const row = luminanceGrid[y];
+            for (let x = 0; x < gridWidth; x++) {
+                const dist = Math.abs(x - glowCenter);
+                const boost = Math.max(0, 100 - dist * 2) + pulse;
+                const val = clamp(row[x] + boost, 0, 255);
+                let ci = Math.floor((val / 255) * (dLen - 1));
+                if (inverted) ci = dLen - 1 - ci;
+                ascii += density[ci];
+            }
+            ascii += '\n';
+        }
+    }
+
+    else if (mode === 'cyber') {
+        const scanY = ((time * 10) % (gridHeight + 30)) - 15;
+        const band = 8;
+        for (let y = 0; y < gridHeight; y++) {
+            const row = luminanceGrid[y];
+            const dist = Math.abs(y - scanY);
+            let boost = 0;
+            if (dist < band) {
+                boost = (1 - dist / band) * 80 * (1 + Math.sin(time * 5) * 0.3);
+            }
+            for (let x = 0; x < gridWidth; x++) {
+                const val = clamp(row[x] + boost, 0, 255);
+                let ci = Math.floor((val / 255) * (dLen - 1));
+                if (Math.random() < 0.02 * speed) {
+                    ci = dLen - 1 - ci;
+                }
+                if (inverted) ci = dLen - 1 - ci;
+                ascii += density[ci];
+            }
+            ascii += '\n';
+        }
+    }
+
+    else if (mode === 'plasma') {
+        for (let y = 0; y < gridHeight; y++) {
+            const row = luminanceGrid[y];
+            for (let x = 0; x < gridWidth; x++) {
+                const v1 = Math.sin(x * 0.05 + time);
+                const v2 = Math.sin(y * 0.05 + time * 0.5);
+                const v3 = Math.sin((x + y) * 0.03 + time * 0.7);
+                const v4 = Math.sin(Math.sqrt(x*x + y*y) * 0.03 + time);
+                const plasma = ((v1 + v2 + v3 + v4) / 4) * 40;
+                const val = clamp(row[x] + plasma, 0, 255);
+                let ci = Math.floor((val / 255) * (dLen - 1));
+                if (inverted) ci = dLen - 1 - ci;
+                ascii += density[ci];
+            }
+            ascii += '\n';
+        }
+    }
+
+    else if (mode === 'pixelate') {
+        const pixelSize = Math.max(2, Math.floor(4 + Math.sin(time) * 2));
+        for (let y = 0; y < gridHeight; y += pixelSize) {
+            for (let x = 0; x < gridWidth; x += pixelSize) {
+                let total = 0;
+                let count = 0;
+                for (let py = y; py < y + pixelSize && py < gridHeight; py++) {
+                    for (let px = x; px < x + pixelSize && px < gridWidth; px++) {
+                        total += luminanceGrid[py][px];
+                        count++;
+                    }
+                }
+                const avg = total / count;
+                let ci = Math.floor((avg / 255) * (dLen - 1));
+                if (inverted) ci = dLen - 1 - ci;
+                const char = density[ci];
+                for (let py = y; py < y + pixelSize && py < gridHeight; py++) {
+                    for (let px = x; px < x + pixelSize && px < gridWidth; px++) {
+                        ascii += char;
+                    }
+                }
+                ascii += '\n';
+            }
+        }
+    }
+
+    else {
+        ascii = currentAscii;
+    }
+
+    asciiOutput.textContent = ascii;
+}
+
+function startAnimation() {
+    stopAnimation();
+    if (!luminanceGrid || animModeSelect.value === 'off') return;
+
+    const fps = 18;
+    let lastTime = 0;
+
+    function loop(ts) {
+        if (ts - lastTime >= 1000 / fps) {
+            lastTime = ts;
+            renderFrame(ts);
+        }
+        livingAnimId = requestAnimationFrame(loop);
+    }
+    livingAnimId = requestAnimationFrame(loop);
+}
+
+function stopAnimation() {
+    if (livingAnimId) { cancelAnimationFrame(livingAnimId); livingAnimId = null; }
+}
+
+function stopAll() {
+    stopAnimation();
+}
+
+function onSettingsChange() {
+    if (currentImage) {
+        clearTimeout(settingsTimeout);
+        settingsTimeout = setTimeout(() => convert(), 300);
+    }
+}
+
+resolutionSlider.addEventListener('input', () => { resValue.textContent = resolutionSlider.value; onSettingsChange(); });
+fontSizeSlider.addEventListener('input', () => { fontValue.textContent = fontSizeSlider.value + 'px'; asciiOutput.style.fontSize = fontSizeSlider.value + 'px'; });
+contrastSlider.addEventListener('input', () => { contrastValue.textContent = contrastSlider.value; onSettingsChange(); });
+brightnessSlider.addEventListener('input', () => { brightnessValue.textContent = brightnessSlider.value; onSettingsChange(); });
+densitySelect.addEventListener('change', onSettingsChange);
+invertSelect.addEventListener('change', onSettingsChange);
+colorSelect.addEventListener('change', updateAsciiColor);
+
+animModeSelect.addEventListener('change', () => {
+    if (animModeSelect.value !== 'off') {
+        animSpeedGroup.style.display = '';
+        $('downloadGifBtn').style.display = '';
+        initRainDrops();
+        startAnimation();
+    } else {
+        animSpeedGroup.style.display = 'none';
+        $('downloadGifBtn').style.display = 'none';
+        stopAnimation();
+        if (currentAscii) asciiOutput.textContent = currentAscii;
+    }
+});
+
+animSpeedSlider.addEventListener('input', () => { animSpeedValue.textContent = animSpeedSlider.value; });
+
+$('copyBtn').addEventListener('click', () => {
+    navigator.clipboard.writeText(currentAscii).then(() => {
+        const btn = $('copyBtn');
+        btn.textContent = '✓ Copiado!';
+        setTimeout(() => btn.textContent = '📋 Copiar texto', 1500);
+    });
+});
+
+$('downloadBtn').addEventListener('click', () => {
+    const blob = new Blob([currentAscii], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'ascii-art.txt';
+    a.click();
+    URL.revokeObjectURL(url);
+});
+
+$('downloadGifBtn').addEventListener('click', async () => {
+    const btn = $('downloadGifBtn');
+    
+    if (typeof GIF === 'undefined') {
+        alert('La librería GIF se está cargando. Por favor espera unos segundos e intenta de nuevo.');
+        return;
+    }
+    
+    btn.textContent = 'Generando...';
+    btn.disabled = true;
+    
+    try {
+        await downloadAsciiGif();
+        btn.textContent = '🎬 Descargar GIF';
+    } catch (err) {
+        console.error('Error generando GIF:', err);
+        btn.textContent = '❌ Error';
+        setTimeout(() => btn.textContent = '🎬 Descargar GIF', 2000);
+    }
+    
+    btn.disabled = false;
+});
+
+async function downloadAsciiGif() {
+    if (!luminanceGrid || !luminanceGrid.length) return;
+    
+    const colorMode = colorSelect.value;
+    let textColor, isGradient = false;
+    
+    if (colorMode.startsWith('gradient-')) {
+        isGradient = true;
+        textColor = GRADIENTS[colorMode];
+    } else {
+        textColor = COLORS[colorMode];
+    }
+    
+    const fs = parseInt(fontSizeSlider.value);
+    const bgColor = '#0B0B0B';
+    
+    const width = gridWidth * fs * 0.6;
+    const height = gridHeight * fs;
+    
+    const gifCanvas = document.createElement('canvas');
+    gifCanvas.width = width;
+    gifCanvas.height = height;
+    const gifCtx = gifCanvas.getContext('2d', { willReadFrequently: true });
+    
+    const density = DENSITY_SCALES[densitySelect.value];
+    const inverted = invertSelect.value === 'yes';
+    const speed = getSpeedMultiplier();
+    const mode = animModeSelect.value === 'off' ? 'wave' : animModeSelect.value;
+    const fps = 10;
+    const duration = 2;
+    const framesCount = fps * duration;
+    
+    const gif = new GIF({
+        workers: 2,
+        quality: 20,
+        width: width,
+        height: height,
+        workerScript: 'https://unpkg.com/gif.js@0.2.0/dist/gif.worker.js',
+        transparent: 0
+    });
+    
+    for (let i = 0; i < framesCount; i++) {
+        const time = (i / fps) * 1000;
+        let ascii = '';
+        
+        const renderTime = time * 0.001 * speed;
+        
+        if (mode === 'wave') {
+            const freq = 0.08;
+            const amp = 40;
+            const phase = renderTime * 4;
+            for (let y = 0; y < gridHeight; y++) {
+                for (let x = 0; x < gridWidth; x++) {
+                    const wave = Math.sin(x * freq + phase) * amp + Math.sin(y * freq * 0.7 + phase * 0.6) * amp * 0.5;
+                    const val = clamp(luminanceGrid[y][x] + wave, 0, 255);
+                    let ci = Math.floor((val / 255) * (density.length - 1));
+                    if (inverted) ci = density.length - 1 - ci;
+                    ascii += density[ci];
+                }
+                ascii += '\n';
+            }
+        } else if (mode === 'breathe') {
+            const pulse = Math.sin(renderTime * 2) * 30;
+            for (let y = 0; y < gridHeight; y++) {
+                for (let x = 0; x < gridWidth; x++) {
+                    const val = clamp(luminanceGrid[y][x] + pulse, 0, 255);
+                    let ci = Math.floor((val / 255) * (density.length - 1));
+                    if (inverted) ci = density.length - 1 - ci;
+                    ascii += density[ci];
+                }
+                ascii += '\n';
+            }
+        } else if (mode === 'neon') {
+            const pulse = Math.sin(renderTime * 3) * 20;
+            const glowCenter = (gridWidth / 2) + Math.sin(renderTime * 2) * (gridWidth / 4);
+            for (let y = 0; y < gridHeight; y++) {
+                for (let x = 0; x < gridWidth; x++) {
+                    const dist = Math.abs(x - glowCenter);
+                    const boost = Math.max(0, 100 - dist * 2) + pulse;
+                    const val = clamp(luminanceGrid[y][x] + boost, 0, 255);
+                    let ci = Math.floor((val / 255) * (density.length - 1));
+                    if (inverted) ci = density.length - 1 - ci;
+                    ascii += density[ci];
+                }
+                ascii += '\n';
+            }
+        } else {
+            ascii = currentAscii;
+        }
+        
+        gifCtx.fillStyle = bgColor;
+        gifCtx.fillRect(0, 0, width, height);
+        
+        if (isGradient) {
+            const gradient = gifCtx.createLinearGradient(0, 0, width, height);
+            const gradientColors = GRADIENTS[colorMode].match(/#[a-fA-F0-9]{6}/g);
+            if (gradientColors) {
+                gradientColors.forEach((color, i) => {
+                    gradient.addColorStop(i / (gradientColors.length - 1), color);
+                });
+            }
+            gifCtx.fillStyle = gradient;
+        } else {
+            gifCtx.fillStyle = textColor;
+        }
+        
+        gifCtx.font = `${fs}px 'Courier New', monospace`;
+        gifCtx.textBaseline = 'top';
+        
+        const lines = ascii.split('\n');
+        lines.forEach((line, y) => {
+            for (let x = 0; x < line.length; x++) {
+                gifCtx.fillText(line[x], x * fs * 0.6, y * fs);
+            }
+        });
+        
+        gif.addFrame(gifCtx, { copy: true, delay: 1000 / fps });
+    }
+    
+    return new Promise((resolve, reject) => {
+        gif.on('finished', (blob) => {
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'ascii-art.gif';
+            a.click();
+            URL.revokeObjectURL(url);
+            resolve();
+        });
+        
+        gif.on('error', (err) => {
+            reject(err);
+        });
+        
+        gif.render();
+    });
+}
+
+const embedModal = $('embedModal');
+const staticCodeEl = $('staticCode');
+const animatedCodeEl = $('animatedCode');
+
+function escapeHtml(str) {
+    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function generateStaticCode() {
+    if (!currentAscii) return '';
+    const colorMode = colorSelect.value;
+    let colorStyle = '';
+    
+    if (colorMode.startsWith('gradient-')) {
+        colorStyle = `background: ${GRADIENTS[colorMode]};
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-shadow: 0 0 20px rgba(123, 44, 191, 0.3);`;
+    } else {
+        colorStyle = `color: ${COLORS[colorMode]};
+        text-shadow: 0 0 10px ${COLORS[colorMode]}40;`;
+    }
+    
+    const fs = fontSizeSlider.value;
+    return `<!-- ASCII Art Estático - Pegalo en tu HTML -->
+<style>
+  .ascii-art {
+    font-family: 'Courier New', monospace;
+    font-size: ${fs}px;
+    line-height: 1;
+    letter-spacing: 0;
+    white-space: pre;
+    ${colorStyle}
+    overflow-x: auto;
+    display: inline-block;
+  }
+  .ascii-container {
+    background: #0B0B0B;
+    padding: 12px;
+    border-radius: 16px;
+    display: flex;
+    justify-content: center;
+    overflow: auto;
+    max-height: 80vh;
+    border: 1px solid rgba(224, 224, 224, 0.12);
+  }
+</style>
+
+<div class="ascii-container">
+  <pre class="ascii-art">${escapeHtml(currentAscii)}</pre>
+</div>`;
+}
+
+function generateAnimatedCode() {
+    if (!luminanceGrid || !luminanceGrid.length) return generateStaticCode();
+    
+    const colorMode = colorSelect.value;
+    let colorStyle = '';
+    let colorVar = "'#9D4EDD'";
+    let colorVarName = 'color';
+    
+    if (colorMode.startsWith('gradient-')) {
+        const gradient = GRADIENTS[colorMode];
+        colorStyle = `background: ${gradient};
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-shadow: 0 0 20px rgba(123, 44, 191, 0.3);`;
+        colorVar = `'${gradient}'`;
+        colorVarName = 'gradient';
+    } else {
+        const color = COLORS[colorMode];
+        colorStyle = `color: ${color};
+        text-shadow: 0 0 10px ${color}40;`;
+        colorVar = `'${color}'`;
+        colorVarName = 'color';
+    }
+    
+    const fs = fontSizeSlider.value;
+    const mode = animModeSelect.value === 'off' ? 'wave' : animModeSelect.value;
+    const speed = animSpeedSlider.value;
+    const density = DENSITY_SCALES[densitySelect.value];
+    const inverted = invertSelect.value === 'yes';
+
+    const gridStr = luminanceGrid.map(r => r.join(',')).join('],[ ');
+
+    return `<!-- ASCII Art Animado con ${colorVarName.toUpperCase()} - Pegalo en tu HTML -->
+<style>
+  .ascii-art {
+    font-family: 'Courier New', monospace;
+    font-size: ${fs}px;
+    line-height: 1;
+    letter-spacing: 0;
+    white-space: pre;
+    ${colorStyle}
+    display: inline-block;
+  }
+  .ascii-container {
+    background: #0B0B0B;
+    padding: 12px;
+    border-radius: 16px;
+    display: flex;
+    justify-content: center;
+    overflow: auto;
+    max-height: 80vh;
+    border: 1px solid rgba(224, 224, 224, 0.12);
+  }
+</style>
+
+<div class="ascii-container">
+  <pre class="ascii-art" id="asciiAnim"></pre>
+</div>
+
+<script>
+(function() {
+  var grid = [[ ${gridStr} ]];
+  var W = ${gridWidth};
+  var H = ${gridHeight};
+  var density = '${density}';
+  var inverted = ${inverted};
+  var dLen = density.length;
+  var speed = ${speed} / 5;
+  var mode = '${mode}';
+  var el = document.getElementById('asciiAnim');
+  var ${colorVarName} = ${colorVar};
+  var drops = [];
+  for (var i = 0; i < W; i++) drops.push({ y: Math.random()*H*-1, s: 0.3+Math.random()*0.7, l: 3+Math.floor(Math.random()*8) });
+  var fps = 18, last = 0;
+
+  function clamp(v, mn, mx) { return v < mn ? mn : v > mx ? mx : v; }
+
+  function render(t) {
+    var time = t * 0.001 * speed;
+    var ascii = '';
+
+    if (mode === 'wave') {
+      for (var y = 0; y < H; y++) {
+        for (var x = 0; x < W; x++) {
+          var wave = Math.sin(x*0.08+time*4)*40 + Math.sin(y*0.056+time*2.4)*20;
+          var val = clamp(grid[y][x]+wave,0,255);
+          var ci = Math.floor((val/255)*(dLen-1));
+          if (inverted) ci = dLen-1-ci;
+          ascii += density[ci];
+        }
+        ascii += '\\n';
+      }
+    }
+    else if (mode === 'vibrate') {
+      var inten = 3*(255/dLen);
+      for (var y = 0; y < H; y++) {
+        for (var x = 0; x < W; x++) {
+          var j = (Math.random()-0.5)*2*inten;
+          var val = clamp(grid[y][x]+j,0,255);
+          var ci = Math.floor((val/255)*(dLen-1));
+          if (inverted) ci = dLen-1-ci;
+          ascii += density[ci];
+        }
+        ascii += '\\n';
+      }
+    }
+    else if (mode === 'breathe') {
+      var pulse = Math.sin(time*2)*30;
+      for (var y = 0; y < H; y++) {
+        for (var x = 0; x < W; x++) {
+          var val = clamp(grid[y][x]+pulse,0,255);
+          var ci = Math.floor((val/255)*(dLen-1));
+          if (inverted) ci = dLen-1-ci;
+          ascii += density[ci];
+        }
+        ascii += '\\n';
+      }
+    }
+    else if (mode === 'scan') {
+      var scanY = ((time*15)%(H+20))-10;
+      for (var y = 0; y < H; y++) {
+        var dist = Math.abs(y-scanY);
+        var boost = dist < 6 ? (1-dist/6)*100 : 0;
+        for (var x = 0; x < W; x++) {
+          var val = clamp(grid[y][x]+boost,0,255);
+          var ci = Math.floor((val/255)*(dLen-1));
+          if (inverted) ci = dLen-1-ci;
+          ascii += density[ci];
+        }
+        ascii += '\\n';
+      }
+    }
+    else if (mode === 'glitch') {
+      for (var y = 0; y < H; y++) {
+        var shift = Math.random() < 0.03*speed ? Math.floor((Math.random()-0.5)*12) : 0;
+        for (var x = 0; x < W; x++) {
+          var sx = clamp(x+shift,0,W-1);
+          var ci = Math.floor((grid[y][sx]/255)*(dLen-1));
+          if (Math.random() < 0.01*speed) ci = Math.floor(Math.random()*dLen);
+          if (inverted) ci = dLen-1-ci;
+          ascii += density[ci];
+        }
+        ascii += '\\n';
+      }
+    }
+    else if (mode === 'rain') {
+      var numD = Math.floor(W*H*0.008*speed);
+      var noise = {};
+      for (var i = 0; i < numD; i++) noise[Math.floor(Math.random()*H)*W+Math.floor(Math.random()*W)] = Math.random()*255;
+      for (var y = 0; y < H; y++) {
+        for (var x = 0; x < W; x++) {
+          var k = y*W+x;
+          var val = noise[k] !== undefined ? noise[k] : grid[y][x];
+          var ci = Math.floor((val/255)*(dLen-1));
+          if (inverted) ci = dLen-1-ci;
+          ascii += density[ci];
+        }
+        ascii += '\\n';
+      }
+    }
+    else if (mode === 'neon') {
+      var pulse = Math.sin(time*3)*20;
+      var glowCenter = (W/2) + Math.sin(time*2)*(W/4);
+      for (var y = 0; y < H; y++) {
+        for (var x = 0; x < W; x++) {
+          var dist = Math.abs(x-glowCenter);
+          var boost = Math.max(0, 100-dist*2) + pulse;
+          var val = clamp(grid[y][x]+boost,0,255);
+          var ci = Math.floor((val/255)*(dLen-1));
+          if (inverted) ci = dLen-1-ci;
+          ascii += density[ci];
+        }
+        ascii += '\\n';
+      }
+    }
+    else if (mode === 'cyber') {
+      var scanY = ((time*10)%(H+30))-15;
+      for (var y = 0; y < H; y++) {
+        var dist = Math.abs(y-scanY);
+        var boost = dist < 8 ? (1-dist/8)*80*(1+Math.sin(time*5)*0.3) : 0;
+        for (var x = 0; x < W; x++) {
+          var val = clamp(grid[y][x]+boost,0,255);
+          var ci = Math.floor((val/255)*(dLen-1));
+          if (Math.random() < 0.02*speed) ci = dLen-1-ci;
+          if (inverted) ci = dLen-1-ci;
+          ascii += density[ci];
+        }
+        ascii += '\\n';
+      }
+    }
+    else if (mode === 'plasma') {
+      for (var y = 0; y < H; y++) {
+        for (var x = 0; x < W; x++) {
+          var v1 = Math.sin(x*0.05+time);
+          var v2 = Math.sin(y*0.05+time*0.5);
+          var v3 = Math.sin((x+y)*0.03+time*0.7);
+          var v4 = Math.sin(Math.sqrt(x*x+y*y)*0.03+time);
+          var plasma = ((v1+v2+v3+v4)/4)*40;
+          var val = clamp(grid[y][x]+plasma,0,255);
+          var ci = Math.floor((val/255)*(dLen-1));
+          if (inverted) ci = dLen-1-ci;
+          ascii += density[ci];
+        }
+        ascii += '\\n';
+      }
+    }
+    else {
+      for (var y = 0; y < H; y++) {
+        for (var x = 0; x < W; x++) {
+          var ci = Math.floor((grid[y][x]/255)*(dLen-1));
+          if (inverted) ci = dLen-1-ci;
+          ascii += density[ci];
+        }
+        ascii += '\\n';
+      }
+    }
+
+    el.textContent = ascii;
+  }
+
+  function loop(ts) {
+    if (ts - last >= 1000/fps) { last = ts; render(ts); }
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+})();
+<\/script>`;
+}
+
+$('embedBtn').addEventListener('click', () => {
+    staticCodeEl.textContent = generateStaticCode();
+    animatedCodeEl.textContent = generateAnimatedCode();
+    embedModal.classList.add('active');
+});
+
+$('modalClose').addEventListener('click', () => embedModal.classList.remove('active'));
+embedModal.addEventListener('click', (e) => { if (e.target === embedModal) embedModal.classList.remove('active'); });
+
+document.querySelectorAll('.code-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+        document.querySelectorAll('.code-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.code-panel').forEach(p => p.classList.remove('active'));
+        tab.classList.add('active');
+        $('panel-' + tab.dataset.tab).classList.add('active');
+    });
+});
+
+document.querySelectorAll('.code-copy-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        var target = btn.dataset.copy === 'static' ? staticCodeEl : animatedCodeEl;
+        navigator.clipboard.writeText(target.textContent).then(() => {
+            btn.textContent = '✓ Copiado!';
+            setTimeout(() => btn.textContent = 'Copiar', 1500);
+        });
+    });
+});
+
+// Check if GIF library is loaded
+function checkGifLibrary() {
+    if (typeof GIF !== 'undefined') {
+        console.log('GIF library loaded successfully');
+    } else {
+        console.warn('GIF library not yet loaded');
+        setTimeout(checkGifLibrary, 500);
+    }
+}
+
+// Start checking
+setTimeout(checkGifLibrary, 1000);
+</script>
+
+</body>
+</html>
