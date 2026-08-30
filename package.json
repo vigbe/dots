@@ -1,0 +1,12 @@
+{
+  "name": "dots-site",
+  "private": true,
+  "type": "module",
+  "description": "dots de vicbas.com — sitio estático; deploy local por FTPS a cPanel (hook pre-push).",
+  "scripts": {
+    "deploy": "node scripts/deploy.mjs"
+  },
+  "dependencies": {
+    "basic-ftp": "^6.0.2"
+  }
+}

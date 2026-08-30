@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# Deploy local ANTES de pushear main (vicbas.com).
+# Saltar el deploy:  git push --no-verify
+deployed=0
+while read -r local_ref local_sha remote_ref remote_sha; do
+  [ "$local_ref" = "refs/heads/main" ] || continue
+  [ "$local_sha" != "0000000000000000000000000000000000000000" ] || continue
+  [ "$deployed" = "1" ] && continue
+  echo "→ pre-push: deploy local de main (FTPS → cPanel)…"
+  repo_root="$(git rev-parse --show-toplevel)" || exit 1
+  (cd "$repo_root" && npm run deploy) || {
+    echo "❌ Deploy local falló: push CANCELADO."
+    echo "   Arreglá el error o salteá el deploy con: git push --no-verify"
+    exit 1
+  }
+  deployed=1
+done

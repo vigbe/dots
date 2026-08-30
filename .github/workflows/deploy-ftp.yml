@@ -1,0 +1,24 @@
+name: Deploy FTP (manual)
+
+# Deploy MANUAL solamente (pestaña Actions → Run workflow).
+# El deploy automático es LOCAL: el hook pre-push deploya al pushear a main.
+# Requiere los secrets FTP_USERNAME / FTP_PASSWORD en GitHub.
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy to FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ftp.vicbas.com
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: /dots.vicbas.com/
+          protocol: ftps
+          port: 21

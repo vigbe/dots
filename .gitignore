@@ -3,3 +3,11 @@ index.html.backup
 .vscode/
 dots/
 .DS_Store/
+
+# Deploy local (vicbas.com) — ver ../DEPLOY.md
+node_modules/
+.env
+.DS_Store
+*.backup
+scripts/.server-env.tmp
+
