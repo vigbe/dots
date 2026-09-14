@@ -11,3 +11,5 @@ node_modules/
 *.backup
 scripts/.server-env.tmp
 
+# Local Pi runtime state
+.atl/

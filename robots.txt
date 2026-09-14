@@ -1,0 +1,36 @@
+# robots.txt — vicbas.com
+# Canonical copy. The FTPS deploy only reaches /dots/, so this file must also
+# be placed at https://vicbas.com/robots.txt (domain root) via cPanel File
+# Manager. See README.md, section "SEO & AI discoverability".
+
+User-agent: *
+Allow: /
+
+# AI / LLM crawlers are explicitly welcome (documentation).
+# Caveats and rationale live in README.md, not here (robots.txt syntax only).
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: meta-externalagent
+Allow: /
+
+Sitemap: https://vicbas.com/sitemap.xml

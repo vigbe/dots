@@ -1,0 +1,39 @@
+# dots — Convertidor de imagen a ASCII art animado
+
+> dots convierte cualquier imagen en arte ASCII directamente en el navegador: once efectos de animación, cámara web en vivo, colores y degradados, y exportación a texto, SVG, ANSI y GIF — gratis, sin registro y con procesado 100% local.
+
+dots es una herramienta web gratuita en español de Vicbasertec. No requiere instalación ni registro: todo el procesado ocurre localmente en el navegador y ninguna imagen se sube a un servidor.
+
+## Qué hace
+
+- Convierte imágenes PNG, JPG y WebP en arte ASCII con seis densidades de caracteres.
+- Once efectos de animación: matrix, ondas, glitch, lluvia, respirar, escaneo, neon, cyber, plasma, vibrar y pixelate.
+- Cámara web en vivo proyectada como ASCII en tiempo real, con captura de fotogramas a resolución nativa.
+- Nueve colores sólidos, seis degradados y ajustes de resolución, contraste, brillo e inversión.
+- Exporta a texto plano (.txt), SVG vectorial autocontenido, ANSI truecolor de 24 bits para terminales y GIF animado de 10 fps.
+- Genera código HTML/CSS/JS autocontenido, listo para incrustar el ASCII art (estático o animado) en cualquier página.
+
+## Cómo usarlo
+
+1. Abrí https://vicbas.com/dots en cualquier navegador moderno (gratis, sin registro).
+2. Arrastrá una imagen, hacé click para elegir un archivo o pegá desde el portapapeles con Ctrl+V; también podés activar la cámara en vivo.
+3. Ajustá resolución, densidad de caracteres, contraste, brillo, color y degradado.
+4. Elegí un efecto de animación y su velocidad.
+5. Copiá el texto, descargá TXT / SVG / ANSI / GIF o generá el código HTML para incrustarlo.
+
+## Privacidad
+
+Todo el procesado es local (JavaScript en el navegador): las imágenes y los fotogramas de la cámara nunca se suben, se guardan ni se transmiten a ningún servidor. No hay backend ni registro de usuarios. La cámara solo se usa mientras la proyección en vivo está activa y se libera al detenerla o salir de la página.
+
+## Exportaciones
+
+- **TXT**: texto UTF-8 para copiar al portapapeles o descargar.
+- **SVG**: vectorial autocontenido; funciona en `<img>` y editores vectoriales.
+- **ANSI**: truecolor de 24 bits, listo para pegar en terminales modernas.
+- **GIF**: animado, 10 fps, 2 segundos, con el efecto y color elegidos.
+- **HTML**: fragmento estático o autoanimado, sin dependencias.
+
+## Enlaces
+
+- [Aplicación web](https://vicbas.com/dots)
+- [Vicbasertec](https://vicbas.com)
