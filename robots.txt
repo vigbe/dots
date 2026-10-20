@@ -3,34 +3,73 @@
 # be placed at https://vicbas.com/robots.txt (domain root) via cPanel File
 # Manager. See README.md, section "SEO & AI discoverability".
 
+# Default policy: everything is open to every crawler.
 User-agent: *
 Allow: /
 
 # AI / LLM crawlers are explicitly welcome (documentation).
 # Caveats and rationale live in README.md, not here (robots.txt syntax only).
 
+# --- AI crawlers, explicitly allowed -----------------------------------------
+
+# OpenAI — GPTBot: crawls pages for model training.
 User-agent: GPTBot
 Allow: /
 
+# OpenAI — OAI-SearchBot: powers search results (SearchGPT / ChatGPT Search).
+User-agent: OAI-SearchBot
+Allow: /
+
+# OpenAI — ChatGPT-User: fetches pages when a ChatGPT user asks for them.
+User-agent: ChatGPT-User
+Allow: /
+
+# Anthropic — ClaudeBot: crawls pages for model training.
 User-agent: ClaudeBot
 Allow: /
 
+# Anthropic — Claude-Web: legacy browsing agent for Claude.
+User-agent: Claude-Web
+Allow: /
+
+# Anthropic — Claude-SearchBot: powers search result fetching for Claude.
+User-agent: Claude-SearchBot
+Allow: /
+
+# Anthropic — anthropic-ai: legacy agent identifier.
+User-agent: anthropic-ai
+Allow: /
+
+# Perplexity — PerplexityBot: powers Perplexity search and answers.
 User-agent: PerplexityBot
 Allow: /
 
+# Google — Google-Extended: controls Gemini API / AI training access.
 User-agent: Google-Extended
 Allow: /
 
-User-agent: CCBot
-Allow: /
-
-User-agent: Amazonbot
-Allow: /
-
+# Apple — Applebot-Extended: controls access for Apple Intelligence training.
 User-agent: Applebot-Extended
 Allow: /
 
+# Amazon — Amazonbot: feeds Alexa, search, and AI services.
+User-agent: Amazonbot
+Allow: /
+
+# Common Crawl — CCBot: builds the open crawl corpus used by many AI projects.
+User-agent: CCBot
+Allow: /
+
+# Meta — meta-externalagent: Meta's AI training agent.
 User-agent: meta-externalagent
 Allow: /
 
+# ByteDance — Bytespider: powers ByteDance search and AI services.
+User-agent: Bytespider
+Allow: /
+
+# --- Sitemap -------------------------------------------------------------------
+
+# Copia de dominio raíz (ver comentario de cabecera) y subdominio del ecosistema.
 Sitemap: https://vicbas.com/sitemap.xml
+Sitemap: https://dots.vicbas.com/sitemap.xml

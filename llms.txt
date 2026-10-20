@@ -33,6 +33,13 @@ Todo el procesado es local (JavaScript en el navegador): las imágenes y los fot
 - **GIF**: animado, 10 fps, 2 segundos, con el efecto y color elegidos.
 - **HTML**: fragmento estático o autoanimado, sin dependencias.
 
+## Autor
+
+- **Víctor Bastías Escobar** — Ingeniero en Informática, Consultor Odoo & ERP, Full Stack Developer y AI Trainer (Santiago, Chile).
+- Sitio personal: https://vicbas.com/
+- CV (35 variantes + cv.json): https://cv-resume.vicbas.com/
+- Parte de las herramientas gratuitas de Víctor Bastías en el ecosistema vicbas.com: [seecolor](https://seecolor.vicbas.com/) (compresión de imágenes 100% en el navegador), [pdfedit](https://pdfedit.vicbas.com/) (editor de PDF 100% local) y [donealready](https://donealready.vicbas.com/) (¿tu idea ya existe en GitHub?).
+
 ## Enlaces
 
 - [Aplicación web](https://vicbas.com/dots)
